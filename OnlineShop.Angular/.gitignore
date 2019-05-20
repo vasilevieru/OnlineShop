@@ -4,7 +4,8 @@
 /dist
 /tmp
 /out-tsc
-
+/vendor
+/app/logs
 # dependencies
 /node_modules
 
@@ -37,3 +38,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# e2e
+/e2e/*.js
+/e2e/*.map
