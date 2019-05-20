@@ -1,0 +1,57 @@
+<app-mat-loading *ngIf="isLoadingResults"></app-mat-loading>
+
+<div class="page-actions">
+  <mat-form-field class="action left">
+    <input matInput type="search" placeholder="Search" class="search-input" #filterInput>
+    <button mat-button matSuffix mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button class="action right" mat-raised-button color="primary" routerLink="/products/new">
+    Add Product <fa-icon [icon]="faPlus"></fa-icon>
+  </button>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="!isLoadingResults">
+  <ng-container matColumnDef="photo">
+    <mat-header-cell *matHeaderCellDef>Photo</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.logoId }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.unitPrice }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.category }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="subCategory">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>SubCategory</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.subCategory }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.description }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <span class="categories-action edit" routerLink="/products/{{row.id}}/edit">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </span>
+      <span class="categories-action delete" (click)="onClickDeleteProduct(row.id)">
+        <fa-icon [icon]="faTrashAlt"></fa-icon>
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator class="mat-elevation-z8" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+  showFirstLastButtons [pageSize]="pageSize"></mat-paginator>

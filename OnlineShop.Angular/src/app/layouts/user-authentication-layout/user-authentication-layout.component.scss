@@ -1,0 +1,16 @@
+.block-main {
+    position: absolute;
+    top: 64px;
+    bottom: 64px;
+    left: 0;
+    right: 0;
+    padding: 25px;  
+    overflow-y: scroll;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .block-main {
+      top: 56px;
+      bottom: 56px;
+    }
+  }

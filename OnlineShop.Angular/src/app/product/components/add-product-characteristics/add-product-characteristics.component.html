@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Add Characteristics</h1>
+<form [formGroup]="form">
+  <div mat-dialog-content>
+    <mat-form-field class="full-width">
+      <input matInput formControlName="key" placeholder="Name" required maxlength="50">
+      <mat-error *ngIf="form.get('key').hasError('required')">
+        Name is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput formControlName="value" placeholder="Value" required maxlength="50">
+        <mat-error *ngIf="form.get('value').hasError('required')">
+          Value is required.
+        </mat-error>
+      </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button (click)="onClickCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onClickSave()" cdkFocusInitial>Save</button>
+  </div>
+</form>

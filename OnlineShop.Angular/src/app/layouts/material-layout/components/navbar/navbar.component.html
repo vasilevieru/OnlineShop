@@ -1,0 +1,71 @@
+<mat-toolbar class="header" color="primary">
+  <div class="burger">
+    <button mat-icon-button class="burger-icon" (click)="onToggleSidenav()"
+      *ngIf="!(router.url === '/login' || router.url === '/registration')">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div class="navigation-menu">
+    <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+      <li>
+        <a routerLink="/catalog">Catalog</a>
+      </li>
+
+      <li>
+        <a routerLink="/reduceri">Reduceri</a>
+      </li>
+
+      <li>
+        <a routerLink="/livrare">Livrare</a>
+      </li>
+    </ul>
+  </div>
+
+  <div fxFlex fxLayout fxLayoutAlign="flex-end">
+    <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+
+
+      <div *ngIf="isAuthenticated">
+        <div *appAuthorize="'Admin'">
+          <a routerLink="/products">
+             Products
+          </a>
+        </div>
+      </div>
+
+      <div *ngIf="isAuthenticated">
+        <div *appAuthorize="'Admin'">
+          <a routerLink="/orders">
+            <fa-icon [icon]="faClipboardList"></fa-icon> Orders
+          </a>
+        </div>
+      </div>
+
+      <div *appAuthorize="'User'">
+        <a routerLink="/cart">
+          <fa-icon [icon]="faShoppingCart"></fa-icon>
+          <span *ngIf="cartItemsCount > 0" matBadge="cartItemsCount" matBadgePosition="before"
+            matBadgeColor="warn"></span> Cart
+        </a>
+      </div>
+
+      <li *ngIf="!isAuthenticated">
+        <a routerLink="/registration">
+          <fa-icon [icon]="faUserPlus"></fa-icon> Sign up
+        </a>
+      </li>
+      <li *ngIf="!isAuthenticated">
+        <a routerLink="/login">
+          <fa-icon [icon]="faSignIn"></fa-icon> Sign in
+        </a>
+      </li>
+
+      <li *ngIf="isAuthenticated">
+        <a (click)="logout()">
+          <fa-icon [icon]="faSignOut"></fa-icon> Logout
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</mat-toolbar>

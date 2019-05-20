@@ -1,0 +1,24 @@
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using OnlineShop.Persistence;
+
+namespace OnlineShop.WebApi
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateWebHostBuilder(args)
+                .Build()
+                .MigrateDatabase(seed: true)
+                .Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+            .UseApplicationInsights()
+            .UseStartup<Startup>();
+    }
+}

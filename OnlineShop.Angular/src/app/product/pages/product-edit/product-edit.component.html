@@ -1,0 +1,62 @@
+<div class="product-add">
+  <form class="form-add" [formGroup]="form">
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Name" formControlName="name" autocomplete="off" require>
+      <mat-error *ngIf="form.get('name').hasError('required')">
+        Name is required.
+      </mat-error>
+      <mat-error *ngIf="form.get('name').hasError('maxLength')">
+        The max length should be 50.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Price" formControlName="unitPrice" autocomplete="off" require>
+      <mat-error *ngIf="form.get('unitPrice').hasError('required')">
+        Name is required.
+      </mat-error>
+      <mat-error *ngIf="form.get('unitPrice').hasError('maxLength')">
+        The max length should be 50.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Category" formControlName="category" [matAutocomplete]="categoryAuto">
+      <mat-autocomplete #categoryAuto="matAutocomplete">
+        <mat-option *ngFor="let option of categories" [value]="option.category">
+          {{option.category}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('category').hasError('required')">
+        This field is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Sub Category" formControlName="subCategory" [matAutocomplete]="subCategoryAuto">
+      <mat-autocomplete #subCategoryAuto="matAutocomplete">
+        <mat-option *ngFor="let option of subCategories" [value]="option.subCategory">
+          {{option.subCategory}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <button type="button" mat-raised-button color="warn" (click)="fileInput.click()">
+      <span>Upload file</span>
+      <input type="file" formControlName="photo" (change)="handleFileInput($event.target.files)" #fileInput
+        style="display: none">
+    </button>
+
+    <mat-form-field class="full-width description">
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <div class="add-book-page__actions">
+      <a type="button" mat-raised-button color="default" routerLink="/products" fxFlex="50">Cancel</a>
+      <button class="submit-button" type="submit" mat-raised-button color="primary" fxFlex="50" (click)="onSubmit()">Save</button>
+    </div>
+
+  </form>
+
+</div>

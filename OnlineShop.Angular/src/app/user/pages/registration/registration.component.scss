@@ -1,0 +1,37 @@
+.registration__page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  
+    ::ng-deep {
+      .mat-card-header-text {
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+  
+  .registration__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 500px;
+    height: 450px;
+  }
+  
+  .registration__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+  }
+  
+  .full-width {
+    max-width: 100%;
+  }
+  
+  .registration__button {
+    width: 100%;
+  }
+  

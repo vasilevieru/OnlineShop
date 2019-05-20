@@ -1,0 +1,75 @@
+<div class="registration__page">
+  <mat-card class="registration__card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Registration</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" class="registration__form">
+
+        <mat-form-field class="full-width">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" type="text" autocomplete="off">
+          <mat-error *ngIf="firstname.hasError('required')">
+            First Name is required.
+          </mat-error>
+          <mat-error *ngIf="firstname.hasError('maxLength')">
+            The length must not exceed 50 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastname" type="text" autocomplete="off">
+          <mat-error *ngIf="lastname.hasError('required')">
+            Last Name is required.
+          </mat-error>
+          <mat-error *ngIf="lastname.hasError('maxLength')">
+            The length must not exceed 50 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" type="text" autocomplete="off">
+          <mat-error *ngIf="phone.hasError('required')">
+            Phone is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" formControlName="email" type="text" autocomplete="off">
+          <mat-error *ngIf="email.hasError('required')">
+            Email is required.
+          </mat-error>
+          <mat-error *ngIf="email.hasError('maxLength')">
+            The length must not exceed 60 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput name="password" formControlName="password" type="password" autocomplete="off">
+          <mat-error *ngIf="password.hasError('required')">
+            Password is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput name="password" formControlName="confirmPassword" type="password" autocomplete="off">
+          <mat-error *ngIf="confirmPassword.hasError('required')">
+            Confirmation password is required.
+          </mat-error>
+          <mat-error *ngIf="confirmPassword.hasError('incorrect')">
+            Passwords doesn't match.
+          </mat-error>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="registration__actions">
+      <button mat-raised-button (click)="onSubmit()" color="primary" class="registration__button">REGISTER</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

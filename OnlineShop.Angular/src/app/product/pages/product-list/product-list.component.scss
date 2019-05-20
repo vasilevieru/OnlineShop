@@ -1,0 +1,22 @@
+.delete {
+  padding-left: 10px;
+}
+
+.edit,
+.delete {
+  &:focus,
+  &:hover {
+    color: darkgray;
+    cursor: pointer;
+  }
+}
+
+.page-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.right {
+  margin: 30px 0;
+}
