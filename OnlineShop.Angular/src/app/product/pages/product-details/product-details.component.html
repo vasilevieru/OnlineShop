@@ -2,14 +2,17 @@
 <section [hidden]="isLoading" class="book-details">
     <mat-card class="mat-elevation-z8">
         <h2 class="product-details__title">{{product.name}}</h2>
-        <!-- <img src="{{photosPath}}">  -->
         <div fxLayout="row">
-            <!-- <img class="product-details__cover-image mat-elevation-z8" src="{{file}}"> -->
-            <ngb-carousel *ngIf="files">
-                <ng-template ngbSlide *ngFor="let file of files">
-                    <!-- <div *ngIf="imageSource" class="ava" [ngStyle]="{ 'background-image': file.imageSource}"></div> -->
-                    <img [src]="file" alt="">
-                </ng-template>
+            <ngb-carousel class="carousel">
+                <ng-container *ngFor="let file of files">
+                    <ng-template ngbSlide [id]="file.id">     
+                        <div class="ava" [ngStyle]="{ 'background-image': file.imageSource }"></div>
+                        <div class="carousel-caption">
+                            <h3>{{product.name}}</h3>
+                            <p>{{product.description}}</p>
+                        </div>
+                    </ng-template>
+                </ng-container>
             </ngb-carousel>
             <div class="product-details__description-category">
                 <p class="product-details_description">
@@ -18,7 +21,7 @@
             </div>
         </div>
 
-        <strong class="product-details__price">${{product.unitPrice}}</strong>
+        <strong class="product-details__price">Price: ${{product.unitPrice}}</strong>
         <div class="product-details-action">
             <button class="product-details__add-to-cart" mat-raised-button color="primary"
                 (click)="addToCart(product.id)" *appAuthorize="'User'">

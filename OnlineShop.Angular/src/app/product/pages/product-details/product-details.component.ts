@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { map, filter, takeUntil, tap, take } from 'rxjs/operators';
 import { NgOnDestroy, FileService, FileDetails } from '@shared';
 import { ProductService } from 'app/product/services';
-import { resetCompiledComponents } from '@angular/core/src/render3/jit/module';
 import { ImageStore } from 'app/shared/image-store/image-store';
 import { Subscription } from 'rxjs';
 
@@ -15,12 +14,10 @@ import { Subscription } from 'rxjs';
 })
 export class ProductDetailsComponent implements OnInit {
 
-
   isLoading = true;
   imageSource: string;
   productId: number;
   files: FileDetails[] = [];
-  file = 'http://localhost:4200/1047099b-d741-433e-b162-b2ffb918d456';
   subscription: Subscription;
 
   product: Product = new Product();
@@ -50,12 +47,7 @@ export class ProductDetailsComponent implements OnInit {
         this.files = res.files;
         this.files.forEach((file, index) => {
           this.loadImage(file.id, index);
-          // console.log(this.imageSource);
-          
-          // this.files[index].imageSource = this.imageSource;
         });
-        console.log(this.files);
-        
         this.isLoading = false;
       });
   }
@@ -79,14 +71,14 @@ export class ProductDetailsComponent implements OnInit {
         take(1)
       )
       .subscribe(blob => {
-          // this.imageSource = URL.createObjectURL(blob);
-          this.files[index].imageSource = URL.createObjectURL(blob).replace('blob:', '');
-          
-          this.isLoading = false;
-        }, () => {
-          this.revokeImageUrl();
-          this.isLoading = false;
-        }
+        // this.imageSource = URL.createObjectURL(blob);
+        this.files[index].imageSource = `url(${URL.createObjectURL(blob)}`;
+
+        this.isLoading = false;
+      }, () => {
+        this.revokeImageUrl();
+        this.isLoading = false;
+      }
       );
   }
 
