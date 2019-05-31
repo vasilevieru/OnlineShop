@@ -24,11 +24,15 @@ export class ProductService {
     return this.http.post<Product>(`api/products`, product);
   }
 
-  updateProduct(productId: number, product: Product): Observable<Product> {
-    return this.http.put<Product>(`api/produts/${productId}`, product);
+  updateProduct(id: number, product: Product): Observable<Product> {
+    return this.http.put<Product>(`api/produts/${id}`, product);
   }
 
-  addCharacteristics(prodId: number, prodCharacteristics: ProductCharacteristics): Observable<ProductCharacteristics> {
-    return this.http.post<ProductCharacteristics>(`api/products/${prodId}/characteristics`, prodCharacteristics);
+  addCharacteristics(id: number, prodCharacteristics: ProductCharacteristics): Observable<ProductCharacteristics> {
+    return this.http.post<ProductCharacteristics>(`api/products/${id}/characteristics`, prodCharacteristics);
+  }
+
+  deleteProduct(id: number): Observable<Product> {
+    return this.http.delete<Product>(`api/products/${id}`);
   }
 }

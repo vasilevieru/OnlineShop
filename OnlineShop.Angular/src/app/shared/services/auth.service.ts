@@ -7,6 +7,8 @@ import * as jwt_decode from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { RefreshToken } from 'app/user/models/refresh-token.model';
 
+const role = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,7 +51,7 @@ export class AuthService {
       this.currentUser.subscribe(user => {
         if (user) {
           const decodedToken = this.getDecodedAccessToken(user.accessToken);
-          this.role = decodedToken.Roles;
+          this.role = decodedToken[role];
         }
       });
       return this.role && permission.roles.includes(this.role);

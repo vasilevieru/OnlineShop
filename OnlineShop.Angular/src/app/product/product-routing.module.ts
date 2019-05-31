@@ -4,6 +4,7 @@ import { UserAuthenticationLayoutComponent } from './../layouts/user-authenticat
 import { ProductAddComponent, ProductDetailsComponent, ProductEditComponent, ProductListComponent } from './pages';
 import { RoleGuard } from '@shared';
 import { CanDeactivateGuard } from 'app/shared/guards/can-deactivate.guard';
+import { MaterialLayoutComponent } from 'app/layouts/material-layout/material-layout.component';
 
 const routes: Routes = [
   {
@@ -24,10 +25,6 @@ const routes: Routes = [
         }
       },
       {
-        path: ':id',
-        component: ProductDetailsComponent,
-      },
-      {
         path: ':id/edit',
         component: ProductEditComponent,
         canDeactivate: [CanDeactivateGuard],
@@ -38,6 +35,16 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'products',
+    component: MaterialLayoutComponent,
+    children: [
+      {
+        path: ':id',
+        component: ProductDetailsComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({

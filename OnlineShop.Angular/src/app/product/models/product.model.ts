@@ -5,5 +5,5 @@ export class Product {
     description: string;
     category: string;
     subCategory: string;
-    logoId: number;
+    logoIds: number[];
 }

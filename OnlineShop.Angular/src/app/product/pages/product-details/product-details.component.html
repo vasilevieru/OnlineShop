@@ -1,7 +1,37 @@
 <app-mat-loading *ngIf="isLoading"></app-mat-loading>
-<section class="product-details">
+<section [hidden]="isLoading" class="book-details">
     <mat-card class="mat-elevation-z8">
-        <h2 class="product-details__title"></h2>
+        <h2 class="product-details__title">{{product.name}}</h2>
+        <!-- <img src="{{photosPath}}">  -->
+        <div fxLayout="row">
+            <!-- <img class="product-details__cover-image mat-elevation-z8" src="{{file}}"> -->
+            <ngb-carousel *ngIf="files">
+                <ng-template ngbSlide *ngFor="let file of files">
+                    <!-- <div *ngIf="imageSource" class="ava" [ngStyle]="{ 'background-image': file.imageSource}"></div> -->
+                    <img [src]="file" alt="">
+                </ng-template>
+            </ngb-carousel>
+            <div class="product-details__description-category">
+                <p class="product-details_description">
+                    {{product.description}}
+                </p>
+            </div>
+        </div>
+
+        <strong class="product-details__price">${{product.unitPrice}}</strong>
+        <div class="product-details-action">
+            <button class="product-details__add-to-cart" mat-raised-button color="primary"
+                (click)="addToCart(product.id)" *appAuthorize="'User'">
+                Add to cart
+            </button>
+            <a class="product-details__edit" mat-raised-button color="default" routerLink="edit"
+                *appAuthorize="'Admin'">
+                Edit
+            </a>
+            <button class="product-details__delete" mat-raised-button color="warn" (click)="onDeleteProduct(product.id)"
+                *appAuthorize="'Admin'">
+                Delete
+            </button>
+        </div>
     </mat-card>
-     
 </section>

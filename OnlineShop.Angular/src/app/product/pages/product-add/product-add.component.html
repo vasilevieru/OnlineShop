@@ -42,7 +42,7 @@
     <button type="button" mat-raised-button color="warn" (click)="fileInput.click()">
       <span>Upload file</span>
       <input type="file" formControlName="photo" (change)="handleFileInput($event.target.files)" #fileInput
-        style="display: none">
+        style="display: none" multiple>
     </button>
 
     <mat-form-field class="full-width description">

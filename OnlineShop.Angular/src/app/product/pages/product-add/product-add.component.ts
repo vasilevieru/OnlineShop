@@ -17,7 +17,7 @@ import {
 })
 export class ProductAddComponent implements OnInit {
 
-  file: File;
+  files: FileList;
   form: FormGroup;
 
   categories: Category[];
@@ -49,18 +49,18 @@ export class ProductAddComponent implements OnInit {
       return;
     }
 
-    this.fileService.uploadPhoto(this.createFormData())
-      .subscribe((uploadedFileDetails) => {
-        const product: Product = this.form.getRawValue();
-        product.logoId = uploadedFileDetails.id;
-        this.addProduct(product);
+    const product: Product = this.form.getRawValue();
+    this.productService.addProduct(product)
+      .subscribe((res) => {
+        this.productId = res.id;
+        this.addPhotos(res.id);
       }, (error: HttpErrorResponse) => {
-        this.snackbar.openErrorWithResponseMessage('Upload image failed', error);
+        this.snackbar.openErrorWithResponseMessage('Product create failed', error);
       });
   }
 
-  handleFileInput(fileList: FileList): void {
-    this.file = fileList.item(0);
+  handleFileInput(fileList): void {
+    this.files = fileList;
   }
 
   openCharacteristicsDialog(): void {
@@ -77,21 +77,20 @@ export class ProductAddComponent implements OnInit {
 
   private createFormData(): FormData {
     const formData = new FormData();
-    formData.append('logo', this.file, this.file.name);
+    for (let index = 0; index < this.files.length; index++) {
+      formData.append('photos', this.files[index], this.files[index].name);
+    }
     return formData;
   }
 
-  private addProduct(product: Product): void {
-    this.productService.addProduct(product)
-      .subscribe((res) => {
-        this.productId = res.id;
-        this.prodCharacteristics.productId = res.id;
-        this.addCharacteristics(this.prodCharacteristics);
+  private addPhotos(productId: number): void {
+    this.fileService.uploadPhoto(productId, this.createFormData())
+      .subscribe(() => {
         this.isSubmitted = true;
         this.snackbar.openSuccess('Product created successfully');
-        this.router.navigate(['/products', res.id]);
+        this.router.navigate(['/products', productId]);
       }, (error: HttpErrorResponse) => {
-        this.snackbar.openErrorWithResponseMessage('Product create failed', error);
+        this.snackbar.openErrorWithResponseMessage('Upload image failed', error);
       });
   }
 

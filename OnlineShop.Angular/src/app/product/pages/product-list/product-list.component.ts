@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterialGridComponent, NgOnDestroy, PageView, PagedResult, SimpleSnackBarService, SVGIcons } from '@shared';
+import { MaterialGridComponent, NgOnDestroy, PageView, PagedResult, SimpleSnackBarService, SVGIcons, FileService } from '@shared';
 import { Observable } from 'rxjs';
 import { Product } from '@product';
 import { ProductService } from 'app/product/services';
 import { MatDialog } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-list',
@@ -18,8 +19,8 @@ export class ProductListComponent extends MaterialGridComponent {
   faEdit = SVGIcons.faEdit;
   faPlus = SVGIcons.faPlus;
 
-  constructor(
-    private productService: ProductService,
+  constructor(private productService: ProductService,
+    private fileService: FileService,
     private snackbar: SimpleSnackBarService,
     public dialog: MatDialog,
     onDestroy$: NgOnDestroy) {
@@ -31,7 +32,12 @@ export class ProductListComponent extends MaterialGridComponent {
   }
 
   onClickDeleteProduct(id: number): void {
-
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.deleteItem(id, 'id');
+      this.snackbar.openSuccess('Product deleted successfully');
+    }, (error: HttpErrorResponse) => {
+      this.snackbar.openErrorWithResponseMessage('Deletion failed', error);
+    });
   }
 
 }

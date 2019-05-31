@@ -10,8 +10,8 @@ export class FileService {
 
   constructor(private http: HttpClient) { }
 
-  public uploadPhoto(formData: FormData): Observable<FileDetails> {
-    return this.http.post<FileDetails>(`api/files/images`, formData);
+  public uploadPhoto(productId: number, formData: FormData): Observable<FileDetails[]> {
+    return this.http.post<FileDetails[]>(`api/files/images/${productId}`, formData);
   }
 
   public getImageBlob(id: number): Observable<Blob> {

@@ -1,0 +1,11 @@
+<div *ngIf="isLoading; else loadedImage" class="ava loading" [ngClass]="styleClasses">
+  <div class="ava not-found" [ngClass]="styleClasses">
+    <i class="fas fa-user fs-16" aria-hidden="true"></i>
+  </div>
+</div>
+<ng-template #loadedImage>
+  <div *ngIf="imageSource" class="ava" [ngStyle]="{ 'background-image': formatedUrlOfImage}" [ngClass]="styleClasses"></div>
+  <div *ngIf="!imageSource" class="ava not-found" [ngClass]="styleClasses">
+    <i class="fas fa-user fs-16" aria-hidden="true"></i>
+  </div>
+</ng-template>

@@ -66,14 +66,15 @@ export class ProductEditComponent implements OnInit {
       return;
     }
 
-    this.fileService.uploadPhoto(this.createFormData())
-      .subscribe((uploadedFileDetails) => {
-        const product: Product = this.form.getRawValue();
-        product.logoId = uploadedFileDetails.id;
-        this.updateProduct(product);
-      }, (error: HttpErrorResponse) => {
-        this.snackbar.openErrorWithResponseMessage('Upload image failed', error);
-      });
+    // this.fileService.uploadPhoto(this.createFormData())
+    //   .subscribe((uploadedFileDetails) => {
+    //     const product: Product = this.form.getRawValue();
+    //     product.id = this.productId;
+    //     // product.logoIds = uploadedFileDetails.id;
+    //     this.updateProduct(product);
+    //   }, (error: HttpErrorResponse) => {
+    //     this.snackbar.openErrorWithResponseMessage('Upload image failed', error);
+    //   });
   }
 
   handleFileInput(fileList: FileList): void {

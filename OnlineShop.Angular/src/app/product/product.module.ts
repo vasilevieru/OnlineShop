@@ -18,7 +18,8 @@ import {
   MatIconModule,
   MatSortModule,
   MatDialogModule,
-  MatCardModule
+  MatCardModule,
+  MatTooltipModule
 } from '@angular/material';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductListComponent } from './pages/product-list/product-list.component';
@@ -26,6 +27,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddProductCharacteristicsComponent } from './components/add-product-characteristics/add-product-characteristics.component';
+import { AuthorizeDirectivesModule } from 'app/directives/authorize-directive.module';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ import { AddProductCharacteristicsComponent } from './components/add-product-cha
     AddProductCharacteristicsComponent
   ],
   imports: [
-  CommonModule,
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
@@ -47,12 +50,15 @@ import { AddProductCharacteristicsComponent } from './components/add-product-cha
     MatInputModule,
     MatButtonModule,
     FormsModule,
+    NgbCarouselModule,
+    AuthorizeDirectivesModule,
     FontAwesomeModule,
     MatAutocompleteModule,
     MatOptionModule,
     ProductRoutingModule,
     MatTableModule,
     MatIconModule,
+    MatTooltipModule,
     MatSortModule,
     MatDialogModule,
     MatPaginatorModule,

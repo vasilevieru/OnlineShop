@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserAuthenticationLayoutComponent } from './layouts/user-authentication-layout/user-authentication-layout.component';
 import { MaterialLayoutModule } from './layouts/material-layout/material-layout.module';
 import { AuthorizeDirectivesModule } from './directives/authorize-directive.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AuthorizeDirectivesModule } from './directives/authorize-directive.modu
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
+    NgbModule,
     AuthorizeDirectivesModule
   ],
   providers: [
