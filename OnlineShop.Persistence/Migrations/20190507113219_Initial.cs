@@ -92,7 +92,7 @@ namespace OnlineShop.Persistence.Migrations
                         column: x => x.PhotoId,
                         principalTable: "Files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

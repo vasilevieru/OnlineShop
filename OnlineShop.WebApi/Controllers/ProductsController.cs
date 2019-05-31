@@ -43,12 +43,24 @@ namespace OnlineShop.WebApi.Controllers
             return CreatedAtAction(nameof(GetById), new { product.Id }, product);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateProductCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
         [HttpPost("{id}/characteristics")]
         public async Task<IActionResult> CreateCharacteristics([FromBody] CreateCharacteristicsCommand command)
         {
             var characteristic = await Mediator.Send(command);
 
             return CreatedAtAction(nameof(GetById), new { characteristic.Id }, characteristic);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await Mediator.Send(new DeleteProductCommand { Id = id }));
         }
     }
 }

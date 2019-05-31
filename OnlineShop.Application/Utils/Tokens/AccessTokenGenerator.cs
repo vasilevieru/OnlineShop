@@ -18,9 +18,9 @@ namespace OnlineShop.Application.Utils.Tokens
             var signingCredentials = new SigningCredentials(symetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
 
             var claims = new List<Claim>();
-            claims.Add(new Claim("Roles", user.Role));
+            claims.Add(new Claim(ClaimTypes.Role, user.Role));
             claims.Add(new Claim("FullName", user.FirstName + " " + user.LastName));
-            claims.Add(new Claim("Id", user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
             var token = new JwtSecurityToken(
                     expires: DateTime.Now.AddHours(4),

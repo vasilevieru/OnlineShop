@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Application.Files.Commands;
+using OnlineShop.Application.Files.Models;
 using OnlineShop.Application.Files.Queries;
 using OnlineShop.Application.Interfaces;
 using OnlineShop.WebApi.Extensions;
@@ -26,26 +26,37 @@ namespace OnlineShop.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        //[RoleAuthorize(Role.Administrator)]
-        public async Task<IActionResult> GetImageById(int id)
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetImages(int productId)
         {
-            var file = await _mediator.Send(new GetFileQuery { Id = id });
+            var files = await Mediator.Send(new GetFilesQuery { ProductId = productId });
 
-            if (file == null || !file.MimeType.StartsWith("image"))
+            if (files.Files.Count() > 0)
             {
                 return NotFound();
             }
 
-            return Ok(file);
+            return Ok(files);
         }
+
+        //[HttpGet("{id}")]
+        ////[RoleAuthorize(Role.Administrator)]
+        //public async Task<IActionResult> GetImageById(int id)
+        //{
+        //    var file = await _mediator.Send(new GetFileQuery { Id = id });
+
+        //    if (file == null || !file.MimeType.StartsWith("image"))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(file);
+        //}
 
         [HttpGet("product/{productId}")]
         public async Task<IActionResult> GetAllProductImages(int productId)
         {
-            var files = await Mediator.Send(new GetFilesQuery { ProductId = productId });
-
-            return Ok(files);
+            return Ok(await Mediator.Send(new GetFilesQuery { ProductId = productId }));
         }
 
 
@@ -64,36 +75,45 @@ namespace OnlineShop.WebApi.Controllers
         // Used in: Employees profile edit to load current profile image
         //          Projects for loadind current logo on edit
         [HttpGet("{id}/thumbnail/blob")]
-        [RoleAuthorize(Role.Administrator)]
+        //[RoleAuthorize(Role.Administrator)]
         [ResponseCache(NoStore = true)]
         public Task<IActionResult> GetImageThumbnailBlobById(int id)
         {
             return GetImageBlobById(id, true);
         }
-        
+
         // POST: api/files/images
         // Used in: Employees add to load new profile image
         //          Projects add for loading new logo on edit
-        [HttpPost]
+        [HttpPost("{productId}")]
         //[RoleAuthorize(Role.Administrator)]
-        public async Task<IActionResult> UploadImage([FromForm]IFormCollection formCollection)
+        public async Task<IActionResult> UploadImage(int productId, [FromForm]IFormCollection formCollection)
         {
             if (formCollection == null || formCollection.Files.Count < 1)
                 return BadRequest();
 
-            IFormFile formFile = formCollection.Files.First();
+            IEnumerable<IFormFile> formFile = formCollection.Files;
 
-            string uploadedImagePath = await _imageFileService.UploadAsync(formFile);
-
-            var result = await Mediator.Send(
+            var files = new List<FileViewModel>();
+            var ids = new List<int>();
+            foreach (var item in formCollection.Files)
+            {
+                string uploadedImagePath = await _imageFileService.UploadAsync(item);
+                var result = await Mediator.Send(
                 new CreateFileCommand
                 {
-                    Name = formFile.FileName,
-                    MimeType = formFile.ContentType,
-                    Path = uploadedImagePath
+                    Name = item.FileName,
+                    Length = item.Length,
+                    MimeType = item.ContentType,
+                    Path = uploadedImagePath,
+                    ProductId = productId,
                 });
-            
-            return CreatedAtAction(nameof(GetImageById), new { id = result.Id }, result);
+
+                files.Add(result);
+                ids.Add(result.Id);
+            }
+
+            return Ok(files);
         }
 
         // PUT: api/files/images/{id}

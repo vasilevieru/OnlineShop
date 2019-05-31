@@ -4,8 +4,6 @@ using OnlineShop.Application.Files.Models;
 using OnlineShop.Application.Interfaces;
 using OnlineShop.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +24,7 @@ namespace OnlineShop.Application.Files.Commands
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            var file = _mapper.Map<CreateFileCommand, Image>(request);
+            var file = _mapper.Map<Image>(request);
 
             await _context.Files.AddAsync(file);
             await _context.SaveChangesAsync(cancellationToken);

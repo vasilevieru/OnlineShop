@@ -28,7 +28,12 @@ namespace OnlineShop.Application.Files.Queries
             IEnumerable<Image> files = await _context.Files
                 .Where(x => x.ProductId == request.ProductId).ToListAsync();
 
-            return _mapper.Map<FilesViewModel>(files);
+            var model = new FilesViewModel
+            {
+                Files = _mapper.Map<IEnumerable<FileViewModel>>(files)
+            };
+
+            return model;
         }
     }
 }
