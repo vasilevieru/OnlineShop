@@ -1,0 +1,16 @@
+.catalog-products {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-item {
+  width: 530px;
+  padding: auto;
+  margin: 10px;
+}
+
+.carousel,
+.ava {
+  width: 500px;
+  height: 500px;
+}

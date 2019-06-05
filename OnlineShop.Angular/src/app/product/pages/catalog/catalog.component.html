@@ -1,3 +1,21 @@
-<p>
-  catalog works!
-</p>
+<div class="catalog-products">
+  <div class="block-catalog">
+    <mat-card class="catalog-item mat-elevation-z8" *ngFor="let d of files">
+      <mat-card-header>
+        <mat-card-title class="catalog-item__title">
+          <!-- <a routerLink="/products/{{item.id}}">{{ item.name }}</a> -->
+        </mat-card-title>
+      </mat-card-header>
+      <ngb-carousel class="carousel">
+          <ng-container *ngFor="let file of d.files">
+              <ng-template ngbSlide [id]="file.id">     
+                  <div class="ava" [ngStyle]="{ 'background-image': file.imageSource }"></div>
+              </ng-template>
+          </ng-container>
+      </ngb-carousel>
+    </mat-card>
+  </div>
+  <mat-paginator class="mat-elevation-z8" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons [pageSize]="pageSize">
+  </mat-paginator>
+</div>

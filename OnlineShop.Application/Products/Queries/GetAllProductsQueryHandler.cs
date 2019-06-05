@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Application.Products.Queries
 {
-    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, ProductListViewModel> { 
+    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, ProductListViewModel>
+    {
 
         private readonly IOnlineShopDbContext _context;
         private readonly IMapper _mapper;
@@ -24,7 +25,9 @@ namespace OnlineShop.Application.Products.Queries
 
         public async Task<ProductListViewModel> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _context.Products
+                .Include(x => x.Images)
+                .ToListAsync();
 
             var model = new ProductListViewModel
             {

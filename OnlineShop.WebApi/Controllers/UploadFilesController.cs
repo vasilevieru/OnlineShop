@@ -26,6 +26,14 @@ namespace OnlineShop.WebApi.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetImagesGroupedByProduct()
+        {
+            var files = await Mediator.Send(new GetFilesGroupedByProductQuery());
+
+            return Ok(files);
+        }
+
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetImages(int productId)
         {

@@ -15,6 +15,10 @@ export class ProductService {
     return this.http.get<Product>(`api/products/${id}`);
   }
 
+  getProductsWithImages(): Observable<Product> {
+    return this.http.get<Product>(`api/products`);
+  }
+
   getProducts(gridParams: PageView): Observable<PagedResult<Product>> {
     const params = gridParams.toSearchParams();
     return this.http.get<PagedResult<Product>>('api/products/paged', { params });

@@ -10,6 +10,10 @@ const appRoutes: Routes = [
     component: MaterialLayoutComponent,
     children: [
       {
+        path: '',
+        component: CatalogComponent
+      },
+      {
         path: 'catalog',
         component: CatalogComponent,
         canActivate: [AuthGuard]

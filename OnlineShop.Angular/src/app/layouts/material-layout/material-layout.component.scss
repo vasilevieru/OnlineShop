@@ -1,7 +1,7 @@
-.container {
+.block-container {
   position: absolute;
-  top: 60px;
-  bottom: 60px;
+  top: 64px;
+  bottom: 64px;
   left: 0;
   right: 0;
 }
@@ -11,7 +11,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .container {
+  .block-container {
     top: 56px;
     bottom: 56px;
   }
